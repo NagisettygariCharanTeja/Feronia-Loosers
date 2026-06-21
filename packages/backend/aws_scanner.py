@@ -127,9 +127,14 @@ def _resolve_instance_profile_role(iam, profile_arn: str) -> str | None:
     if not profile_arn:
         return None
     profile_name = profile_arn.split("/")[-1]
-    resp = iam.get_instance_profile(InstanceProfileName=profile_name)
-    roles = resp["InstanceProfile"]["Roles"]
-    return roles[0]["Arn"] if roles else None
+    try:
+        from botocore.exceptions import ClientError
+        resp = iam.get_instance_profile(InstanceProfileName=profile_name)
+        roles = resp["InstanceProfile"]["Roles"]
+        return roles[0]["Arn"] if roles else None
+    except Exception:
+        # Ignore AccessDenied if the execution role lacks IAM read permissions
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -209,35 +214,39 @@ def _scan_security_groups(ec2, region: str) -> list[dict]:
 
 def _scan_iam_roles(iam) -> list[dict]:
     resources = []
-    paginator = iam.get_paginator("list_roles")
-    for page in paginator.paginate():
-        for role in page["Roles"]:
-            role_name = role["RoleName"]
-            tags = _tags_to_dict(iam.list_role_tags(RoleName=role_name).get("Tags"))
-            if not _is_project_resource(tags):
-                continue
+    try:
+        paginator = iam.get_paginator("list_roles")
+        for page in paginator.paginate():
+            for role in page["Roles"]:
+                role_name = role["RoleName"]
+                tags = _tags_to_dict(iam.list_role_tags(RoleName=role_name).get("Tags"))
+                if not _is_project_resource(tags):
+                    continue
 
-            attached_policy_names, attached_actions = [], []
-            for p in iam.list_attached_role_policies(RoleName=role_name)["AttachedPolicies"]:
-                attached_policy_names.append(p["PolicyName"])
-                attached_actions.extend(_resolve_policy_actions(iam, policy_arn=p["PolicyArn"]))
-            for inline_name in iam.list_role_policies(RoleName=role_name)["PolicyNames"]:
-                attached_policy_names.append(inline_name)
-                attached_actions.extend(
-                    _resolve_policy_actions(iam, role_name=role_name, inline_name=inline_name)
-                )
+                attached_policy_names, attached_actions = [], []
+                for p in iam.list_attached_role_policies(RoleName=role_name)["AttachedPolicies"]:
+                    attached_policy_names.append(p["PolicyName"])
+                    attached_actions.extend(_resolve_policy_actions(iam, policy_arn=p["PolicyArn"]))
+                for inline_name in iam.list_role_policies(RoleName=role_name)["PolicyNames"]:
+                    attached_policy_names.append(inline_name)
+                    attached_actions.extend(
+                        _resolve_policy_actions(iam, role_name=role_name, inline_name=inline_name)
+                    )
 
-            resources.append({
-                "id": role["Arn"],
-                "type": "iam_role",
-                "name": role_name,
-                "region": "global",
-                "public_exposure": False,
-                "attached_policies": attached_policy_names,
-                "attached_actions": sorted(set(attached_actions)),
-                "tags": _clean_tags(tags),
-                "_logical_id": tags.get(LOGICAL_ID_TAG, role_name),
-            })
+                resources.append({
+                    "id": role["Arn"],
+                    "type": "iam_role",
+                    "name": role_name,
+                    "region": "global",
+                    "public_exposure": False,
+                    "attached_policies": attached_policy_names,
+                    "attached_actions": sorted(set(attached_actions)),
+                    "tags": _clean_tags(tags),
+                    "_logical_id": tags.get(LOGICAL_ID_TAG, role_name),
+                })
+    except Exception:
+        # Gracefully handle AccessDenied if the execution role lacks IAM read permissions
+        pass
     return resources
 
 
