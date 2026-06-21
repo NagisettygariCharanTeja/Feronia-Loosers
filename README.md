@@ -60,9 +60,6 @@ AWS Infrastructure
     Grafilab API)           Grafilab API)
            |                       |
            +-----------+-----------+
-                       v
-                  Gatekeeper
-               (pure-Python validator, no LLM)
                        |
                        v
                   Synthesizer
