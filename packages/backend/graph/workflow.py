@@ -157,11 +157,11 @@ def execute_node(state: FeronaState) -> dict:
             if decision == "approve":
                 approved.append(target_action)
             else:
-                console.print(f"[yellow]Destructive action for {finding_id} rejected by user.[/yellow]")
+                console.print(f"[yellow]Action for {finding_id} rejected by user.[/yellow]")
     else:
         # Legacy global approval or auto_approved logic
         if decision_obj == "reject":
-            console.print("[yellow]Destructive actions rejected by user.[/yellow]")
+            console.print("[yellow]Actions rejected by user.[/yellow]")
             approved = [s for s in action_plan if not s.requires_approval]
         else:
             approved = list(action_plan)

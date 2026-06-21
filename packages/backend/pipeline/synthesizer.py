@@ -56,7 +56,7 @@ def synthesize(findings: list[Finding]) -> tuple[list[Finding], list[ActionPlanS
             human_label=build_human_label(f),
             justification=f.plain_english,
             action_type="destructive" if is_destructive else "safe",
-            requires_approval=is_destructive,
+            requires_approval=True,
             savings_usd_month=(
                 f.quantified_impact.get("resize_savings_usd_month", 0)
                 if f.quantified_impact

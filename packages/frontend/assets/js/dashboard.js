@@ -129,13 +129,13 @@ function openFindingModal(findingId) {
                 </div>` : ''}
         </div>` : '';
 
-    // Destructive-action warning — only when step actually requires approval
+    // Action warning — only when step actually requires approval
     const warningHtml = isPending ? `
-        <div class="finding-modal-warning">
-            &#9888;&nbsp; This is a destructive action and requires your explicit approval before execution.
+        <div class="finding-modal-warning" style="margin-top:16px;">
+            &#9888;&nbsp; This action requires your explicit approval before execution.
         </div>` : '';
 
-    // Approve / Deny footer — only for pending destructive steps
+    // Approve / Deny footer — only for pending actions
     const footerHtml = isPending ? `
         <div class="finding-modal-footer">
             <button class="btn-cancel" onclick="closeFindingModal()">Cancel</button>
@@ -773,7 +773,7 @@ window.runPipelineLive = function () {
             source.close();
             const count = data.pending_actions?.length || 0;
             renderScanLog(
-                `Gatekeeper: HITL gate — ${count} destructive action(s) require approval`,
+                `Gatekeeper: HITL gate — ${count} action(s) require approval`,
                 'approval'
             );
             setScanProgress(96, 'Awaiting approval');
