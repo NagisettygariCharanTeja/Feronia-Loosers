@@ -125,11 +125,16 @@ async def run_pipeline_generator():
         "pending_actions": [],
     })
 
+    # Yield immediately to keep the Vercel/proxy connection alive
+    yield f"data: {json.dumps({'status': 'Connecting to AWS...', 'type': 'status', 'node': 'init'})}\n\n"
+    await asyncio.sleep(0.1)
+
     try:
-        raw_logs, infrastructure = load_data()
-    except RuntimeError as e:
+        raw_logs, infrastructure = await asyncio.to_thread(load_data)
+    except Exception as e:
         yield f"data: {json.dumps({'status': str(e), 'type': 'error', 'node': 'ingest'})}\n\n"
         return
+
     initial_state = {
         "raw_logs": raw_logs,
         "standardized_logs": [],
@@ -184,7 +189,15 @@ async def run_pipeline_generator():
 
 @app.get("/api/pipeline/stream")
 async def stream_pipeline():
-    return StreamingResponse(run_pipeline_generator(), media_type="text/event-stream")
+    return StreamingResponse(
+        run_pipeline_generator(), 
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
 
 
 @app.post("/api/pipeline/approve")
