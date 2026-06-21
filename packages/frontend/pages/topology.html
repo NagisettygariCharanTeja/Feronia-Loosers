@@ -1,0 +1,31 @@
+<!-- Topology Map Page -->
+
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Interactive Canvas</p>
+        <h1 class="header-title">Infrastructure Topology</h1>
+    </div>
+    <div style="font-size:13px;color:var(--text-secondary); text-align: right; line-height: 1.6;">
+        Click a node to view details &amp; findings.<br>
+        <span style="color:var(--feronia-red);font-weight:700;">Bright border</span> = has active findings.
+    </div>
+</div>
+
+<!-- Legend -->
+<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-secondary);align-items:center;padding: 24px 52px 0;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:rgba(34,197,94,0.8);border:1px solid #22c55e;border-radius:50%;"></span> EC2 / VPC</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:rgba(13,148,136,0.8);border:1px solid #0d9488;border-radius:50%;"></span> S3</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:rgba(168,85,247,0.8);border:1px solid #a855f7;border-radius:50%;"></span> RDS / EKS</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:rgba(249,115,22,0.8);border:1px solid #f97316;border-radius:50%;"></span> Security Group</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:rgba(253,224,71,0.8);border:1px solid #fde047;border-radius:50%;"></span> IAM Role</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:rgba(148,163,184,0.8);border:1px solid #94a3b8;border-radius:50%;"></span> EBS Volume</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:transparent;border:3px solid #ef4444;border-radius:50%;"></span> Has Findings</span>
+</div>
+
+<!-- Canvas -->
+<div id="topology-canvas" role="img" aria-label="Interactive infrastructure topology map"></div>
+
+<!-- Detail Panel (slides in from right) -->
+<aside id="node-detail-panel" class="node-detail-panel" aria-label="Node details">
+    <!-- Populated by topology.js -->
+</aside>

@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://feronia-loosers-production.up.railway.app/api/:match*"
+    }
+  ]
+}

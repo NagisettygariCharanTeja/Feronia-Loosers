@@ -1,0 +1,79 @@
+<!-- Dashboard — sidebar + infrastructure graph pane layout -->
+
+<div class="dashboard-v2">
+
+    <!-- ── Left sidebar ──────────────────────────────────────────── -->
+    <aside class="dash-sidebar">
+
+        <!-- Status topbar -->
+        <div class="sidebar-topbar">
+            <span class="pipeline-status">
+                <span class="status-dot blink-dot" id="db-status-dot"></span>
+                <span id="db-pipeline-state">idle</span>
+            </span>
+            <button class="btn ghost" style="font-size:12px;padding:5px 12px;" onclick="navigate('scan')">
+                <i data-lucide="scan-search" style="width:13px;height:13px;"></i> New Scan
+            </button>
+        </div>
+
+        <!-- 2×2 mini stat grid -->
+        <div class="sidebar-stats">
+            <div class="sidebar-stat danger">
+                <span>Critical</span>
+                <strong id="db-critical">-</strong>
+            </div>
+            <div class="sidebar-stat orange">
+                <span>High</span>
+                <strong id="db-high">-</strong>
+            </div>
+            <div class="sidebar-stat">
+                <span>Waste/mo</span>
+                <strong id="db-savings">-</strong>
+            </div>
+            <div class="sidebar-stat teal">
+                <span>CO2 saved</span>
+                <strong id="db-co2">-</strong>
+            </div>
+        </div>
+
+        <!-- Filter pills -->
+        <div class="sidebar-filter-row">
+            <button class="filter-pill active" data-agent="all" onclick="setDashboardFilter('all')">All</button>
+            <button class="filter-pill" data-agent="secops" onclick="setDashboardFilter('secops')">SecOps</button>
+            <button class="filter-pill" data-agent="greenops" onclick="setDashboardFilter('greenops')">GreenOps</button>
+        </div>
+
+        <!-- Scrollable findings list -->
+        <div class="sidebar-findings" id="sidebar-findings">
+            <!-- Populated by dashboard.js -->
+        </div>
+
+    </aside>
+
+    <!-- ── Right graph canvas pane ───────────────────────────────── -->
+    <div class="dash-graph-pane" id="dash-graph-pane">
+        <canvas id="feronia-graph-cv" class="dash-graph-canvas"></canvas>
+
+        <!-- Legend (bottom-left) -->
+        <div class="graph-legend">
+            <div class="graph-legend-title">Legend</div>
+            <div class="legend-row">
+                <span class="legend-dot" style="background:#ef4444;box-shadow:0 0 5px rgba(239,68,68,.55)"></span>Critical issue
+            </div>
+            <div class="legend-row">
+                <span class="legend-dot" style="background:#f97316;box-shadow:0 0 5px rgba(249,115,22,.55)"></span>High issue
+            </div>
+            <div class="legend-row">
+                <span class="legend-dot" style="background:#22c55e;box-shadow:0 0 5px rgba(34,197,94,.55)"></span>GreenOps / waste
+            </div>
+            <div class="legend-row">
+                <span class="legend-dot" style="background:rgba(134,239,172,.3)"></span>Healthy
+            </div>
+        </div>
+
+        <!-- Hint (top-right) -->
+        <div class="graph-hint">hover nodes &middot; click findings &rarr;</div>
+    </div>
+
+</div>
+

@@ -1,0 +1,27 @@
+﻿<div class="page-header">
+    <div>
+        <p class="eyebrow">Gatekeeper validated</p>
+        <h1 class="header-title">Findings</h1>
+    </div>
+    <span id="findings-count" class="count-pill">Loading...</span>
+</div>
+
+<div class="filter-bar" role="search" aria-label="Filter findings">
+    <select id="filter-agent" aria-label="Filter by agent">
+        <option value="all">All Agents</option>
+        <option value="secops">SecOps</option>
+        <option value="greenops">GreenOps</option>
+    </select>
+    <select id="filter-severity" aria-label="Filter by severity">
+        <option value="all">All Severities</option>
+        <option value="critical">Critical</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+    </select>
+    <input type="text" id="filter-search" placeholder="Search findings..." aria-label="Search findings">
+</div>
+
+<div class="findings-grid" id="findings-grid" role="list" aria-label="Findings catalog">
+    <!-- Rendered by findings.js -->
+</div>

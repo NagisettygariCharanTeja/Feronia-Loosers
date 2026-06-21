@@ -1,0 +1,24 @@
+{
+  "dangerous_permission_combos": [
+    {
+      "id": "iam_privesc_by_policy_version",
+      "requires_all": ["iam:CreatePolicyVersion"],
+      "description": "Can create a new default policy version, potentially granting self full access."
+    },
+    {
+      "id": "iam_privesc_by_rollback",
+      "requires_all": ["iam:SetDefaultPolicyVersion"],
+      "description": "Can roll back to a prior, more permissive policy version."
+    },
+    {
+      "id": "iam_privesc_by_passrole_lambda",
+      "requires_all": ["iam:PassRole", "lambda:CreateFunction", "lambda:InvokeFunction"],
+      "description": "Can pass a privileged role to a new Lambda function and invoke it to act with that role's permissions."
+    },
+    {
+      "id": "iam_privesc_by_attachment",
+      "requires_all": ["iam:AttachUserPolicy"],
+      "description": "Can attach an arbitrary managed policy (e.g. AdministratorAccess) to self or another user."
+    }
+  ]
+}

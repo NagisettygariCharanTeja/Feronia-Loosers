@@ -1,0 +1,151 @@
+{
+  "resources": [
+    {
+      "id": "i-0abc123def456",
+      "type": "ec2_instance",
+      "name": "hilti-bim-processor",
+      "instance_type": "t3.large",
+      "region": "ap-southeast-1",
+      "public_exposure": true,
+      "cpu_avg_7d": 4.2,
+      "state": "terminated",
+      "tags": {
+        "env": "prod",
+        "owner": "hilti-bim-service",
+        "project": "field-link"
+      },
+      "iam_profile": "arn:aws:iam::123456789012:role/bim-processor-role",
+      "http_tokens": "required"
+    },
+    {
+      "id": "i-0zombie999",
+      "type": "ec2_instance",
+      "name": "hilti-legacy-sync",
+      "instance_type": "c5.2xlarge",
+      "region": "ap-southeast-1",
+      "public_exposure": false,
+      "cpu_avg_7d": 0.8,
+      "state": "terminated",
+      "tags": {
+        "env": "prod",
+        "owner": "unknown"
+      },
+      "iam_profile": null
+    },
+    {
+      "id": "sg-0xyz789abc",
+      "type": "security_group",
+      "name": "bim-processor-sg",
+      "region": "ap-southeast-1",
+      "public_exposure": true,
+      "inbound_rules": [
+        {
+          "port": 443,
+          "protocol": "tcp",
+          "source": "0.0.0.0/0"
+        }
+      ],
+      "tags": {}
+    },
+    {
+      "id": "arn:aws:iam::123456789012:role/bim-processor-role",
+      "type": "iam_role",
+      "name": "bim-processor-role",
+      "region": "global",
+      "public_exposure": false,
+      "attached_policies": [],
+      "attached_actions": [
+        "iam:PassRole",
+        "lambda:CreateFunction",
+        "lambda:InvokeFunction",
+        "iam:CreatePolicyVersion"
+      ],
+      "tags": {
+        "env": "prod"
+      }
+    },
+    {
+      "id": "vol-0unattached456",
+      "type": "ebs_volume",
+      "name": "old-bim-backup-volume",
+      "region": "ap-southeast-1",
+      "public_exposure": false,
+      "state": "terminated",
+      "size_gb": 500,
+      "attached_to": null,
+      "tags": {}
+    },
+    {
+      "id": "rds-hilti-projects-db",
+      "type": "rds_database",
+      "name": "hilti-projects-db",
+      "instance_type": "db.t3.large",
+      "region": "ap-southeast-1",
+      "public_exposure": false,
+      "encryption_enabled": true,
+      "state": "available",
+      "tags": {
+        "env": "prod",
+        "owner": "project-management"
+      }
+    },
+    {
+      "id": "s3-hilti-bim-models",
+      "type": "s3_bucket",
+      "name": "hilti-bim-models-prod",
+      "region": "ap-southeast-1",
+      "public_exposure": false,
+      "versioning": false,
+      "encryption_enabled": false,
+      "tags": {
+        "env": "prod",
+        "contains": "bim-files"
+      }
+    },
+    {
+      "id": "i-0lowutil888",
+      "type": "ec2_instance",
+      "name": "hilti-report-generator",
+      "instance_type": "t3.large",
+      "region": "ap-southeast-1",
+      "public_exposure": false,
+      "cpu_avg_7d": 6.1,
+      "state": "terminated",
+      "tags": {
+        "env": "prod",
+        "owner": "analytics"
+      },
+      "iam_profile": null
+    }
+  ],
+  "relationships": [
+    {
+      "source": "sg-0xyz789abc",
+      "target": "i-0abc123def456",
+      "relation": "protects"
+    },
+    {
+      "source": "i-0abc123def456",
+      "target": "rds-hilti-projects-db",
+      "relation": "connects_to",
+      "port": 5432,
+      "protocol": "tcp"
+    },
+    {
+      "source": "i-0abc123def456",
+      "target": "s3-hilti-bim-models",
+      "relation": "has_permission"
+    },
+    {
+      "source": "arn:aws:iam::123456789012:role/bim-processor-role",
+      "target": "i-0abc123def456",
+      "relation": "attached_to"
+    },
+    {
+      "source": "i-0lowutil888",
+      "target": "rds-hilti-projects-db",
+      "relation": "connects_to",
+      "port": 5432
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"original": {"this_entry_is": "deliberately_malformed", "notes": "Missing required fields: log_type, resource_id, event_time"}, "error": "'log_type'"}

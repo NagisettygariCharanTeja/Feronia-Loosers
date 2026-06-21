@@ -1,0 +1,12 @@
+.env
+.claude/
+.aws/
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+packages/backend/output/*.json
+packages/backend/output/*.jsonl
+.DS_Store
+EOF

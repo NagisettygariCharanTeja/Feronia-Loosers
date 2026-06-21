@@ -1,0 +1,10 @@
+{
+  "_note": "Grid carbon intensity in kg CO2e per kWh. Sources: Cloud Carbon Footprint (cloudcarbonfootprint.org) via Carbon Data Intelligence. Values represent annual average emission factors per AWS region.",
+  "us-east-1": 0.415,
+  "us-west-2": 0.136,
+  "eu-west-1": 0.280,
+  "eu-central-1": 0.338,
+  "ap-southeast-1": 0.49453,
+  "ap-northeast-1": 0.506,
+  "ca-central-1": 0.120
+}

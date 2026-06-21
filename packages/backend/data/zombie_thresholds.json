@@ -1,0 +1,6 @@
+{
+  "cpu_utilization_pct_max": 10,
+  "consecutive_days_required": 7,
+  "network_io_bytes_max": 1000,
+  "unattached_volume_days": 7
+}

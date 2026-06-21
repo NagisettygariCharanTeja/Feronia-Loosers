@@ -1,0 +1,23 @@
+<section class="scanning-screen">
+    <div class="scan-progress"><div id="scan-progress-bar"></div></div>
+    <div class="scan-stage">
+        <div class="graph-panel">
+            <canvas id="feronia-graph-cv" class="scan-canvas"></canvas>
+            <div class="agent-rail left">
+                <span class="agent-dot blink-dot"></span>
+                <span>SecOps</span>
+            </div>
+            <div class="agent-rail right">
+                <span>GreenOps</span>
+                <span class="agent-dot blink-dot"></span>
+            </div>
+        </div>
+        <aside class="terminal-panel">
+            <div class="terminal-header">
+                <span></span><span></span><span></span>
+                <strong id="scan-progress-text">Starting</strong>
+            </div>
+            <div id="feronia-log" class="terminal-log"></div>
+        </aside>
+    </div>
+</section>

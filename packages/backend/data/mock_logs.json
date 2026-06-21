@@ -1,0 +1,127 @@
+[
+  {
+    "log_type": "cloudtrail",
+    "event_name": "AuthorizeSecurityGroupIngress",
+    "resource_id": "sg-0xyz789abc",
+    "resource_type": "security_group",
+    "event_time": "2026-06-19T08:12:33Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "user_identity": {"arn": "arn:aws:iam::123456789012:user/dev-ops-admin"},
+      "request_parameters": {"ipPermissions": [{"ipProtocol": "tcp", "fromPort": 22, "toPort": 22, "ipRanges": [{"cidrIp": "0.0.0.0/0"}]}]},
+      "response_elements": {"return": true}
+    }
+  },
+  {
+    "log_type": "cloudtrail",
+    "event_name": "PutBucketPolicy",
+    "resource_id": "s3-hilti-bim-models",
+    "resource_type": "s3_bucket",
+    "event_time": "2026-06-19T09:45:10Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "user_identity": {"arn": "arn:aws:iam::123456789012:user/data-engineer"},
+      "request_parameters": {"bucketName": "hilti-bim-models-prod", "policy": "{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":\"s3:GetObject\"}"},
+      "response_elements": {"return": true}
+    }
+  },
+  {
+    "log_type": "cloudtrail",
+    "event_name": "AttachRolePolicy",
+    "resource_id": "arn:aws:iam::123456789012:role/bim-processor-role",
+    "resource_type": "iam_role",
+    "event_time": "2026-06-19T10:30:00Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "user_identity": {"arn": "arn:aws:iam::123456789012:user/root"},
+      "request_parameters": {"roleName": "bim-processor-role", "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"},
+      "response_elements": {"return": true}
+    }
+  },
+  {
+    "log_type": "cloudtrail",
+    "event_name": "ConsoleLogin",
+    "resource_id": "arn:aws:iam::123456789012:user/unknown-contractor",
+    "resource_type": "iam_user",
+    "event_time": "2026-06-19T03:22:15Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "user_identity": {"arn": "arn:aws:iam::123456789012:user/unknown-contractor"},
+      "response_elements": {"ConsoleLogin": "Failure"},
+      "additional_event_data": {"MFAUsed": "No", "LoginTo": "https://console.aws.amazon.com"}
+    }
+  },
+  {
+    "log_type": "config_snapshot",
+    "resource_id": "i-0abc123def456",
+    "resource_type": "ec2_instance",
+    "event_time": "2026-06-19T12:00:00Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "instance_type": "m5.4xlarge",
+      "cpu_avg_7d": 4.2,
+      "state": "running",
+      "public_ip": "54.169.123.45",
+      "monthly_cost_usd": 560.64
+    }
+  },
+  {
+    "log_type": "config_snapshot",
+    "resource_id": "i-0zombie999",
+    "resource_type": "ec2_instance",
+    "event_time": "2026-06-19T12:00:00Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "instance_type": "c5.2xlarge",
+      "cpu_avg_7d": 0.8,
+      "state": "running",
+      "public_ip": null,
+      "monthly_cost_usd": 248.20
+    }
+  },
+  {
+    "log_type": "config_snapshot",
+    "resource_id": "vol-0unattached456",
+    "resource_type": "ebs_volume",
+    "event_time": "2026-06-19T12:00:00Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "state": "available",
+      "attached_to": null,
+      "size_gb": 500,
+      "monthly_cost_usd": 50.00
+    }
+  },
+  {
+    "log_type": "config_snapshot",
+    "resource_id": "rds-hilti-projects-db",
+    "resource_type": "rds_database",
+    "event_time": "2026-06-19T12:00:00Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "instance_type": "db.t3.large",
+      "encryption_enabled": false,
+      "publicly_accessible": true,
+      "multi_az": false,
+      "monthly_cost_usd": 99.28
+    }
+  },
+  {
+    "log_type": "cloudwatch_metric",
+    "resource_id": "i-0lowutil888",
+    "resource_type": "ec2_instance",
+    "event_time": "2026-06-19T12:05:00Z",
+    "region": "ap-southeast-1",
+    "payload": {
+      "metric_name": "CPUUtilization",
+      "average": 6.1,
+      "maximum": 12.3,
+      "minimum": 1.2,
+      "period_seconds": 604800
+    }
+  },
+  {
+    "this_entry_is": "deliberately_malformed",
+    "notes": "Missing required fields: log_type, resource_id, event_time"
+  }
+]
