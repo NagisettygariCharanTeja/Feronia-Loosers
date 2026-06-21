@@ -1,10 +1,20 @@
 import json
 import asyncio
 from pathlib import Path
+import os
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from langgraph.types import Command # pyrefly: ignore
+
+# Auto-inject AWS credentials file on Railway
+aws_creds_content = os.environ.get("AWS_CREDENTIALS_FILE_CONTENT")
+if aws_creds_content:
+    aws_dir = Path.home() / ".aws"
+    aws_dir.mkdir(parents=True, exist_ok=True)
+    creds_file = aws_dir / "credentials"
+    creds_file.write_text(aws_creds_content.replace("\\n", "\n"))
+    os.environ["AWS_SHARED_CREDENTIALS_FILE"] = str(creds_file)
 
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
