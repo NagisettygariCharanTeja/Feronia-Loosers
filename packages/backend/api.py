@@ -216,4 +216,9 @@ async def approve_pipeline(request: Request):
     return {"status": "complete", "decision": decision, "dashboard": _serialise_dashboard(final_state)}
 
 
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+if FRONTEND_DIR.exists():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+else:
+    @app.get("/")
+    def root():
+        return {"status": "Backend is running. API endpoints are available under /api"}
